@@ -1,4 +1,5 @@
 #include <memory>
+#include <format>
 #include "rclcpp/rclcpp.hpp"
 #include "std_msgs/msg/string.hpp"
 
@@ -22,8 +23,8 @@ class ListenerSubcriber : public rclcpp::Node
                         msg is the pointer to the message receieved from the topic.
                         ->data references the data package under the "topic" topic. It pulls from msg.data.
                     */
-                    RCLCPP_INFO(this->get_logger(),"I heard: '%s' (Total: %s times)", MessageInTopic->data.c_str(), count_);
-                    // Added .c_str() modifier becuase fundamentally RCLCPP_INFO is a c based macro so it needs c based string. rip to c++ curly braces :heartbreak:
+                    RCLCPP_INFO(this->get_logger(), "%s", std::format("I heard: '{}' (Total: {} times)", MessageInTopic->data, count_).c_str());
+                    // Added std::format TO FINALLY ADD BACK C++ STYLE WITH CURLYYY
                 }
             );
         }
